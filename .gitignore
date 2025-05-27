@@ -1,0 +1,4 @@
+backend/tests/setup.ts
+backend/node_modules
+notes.txt
+.env

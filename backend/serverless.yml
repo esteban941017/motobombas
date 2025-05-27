@@ -1,0 +1,22 @@
+service: arobuxtamotobombas-infra
+
+plugins:
+  - serverless-deployment-bucket
+
+frameworkVersion: '3'
+
+custom: ${file(./serverless/custom/variables.yml)}
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, "dev"}
+  region: ${opt:region, "us-east-1"}
+  deploymentBucket:
+    name: ${self:custom.deploymentBucket.${self:provider.stage}}
+  environment: ${file(./serverless/provider/environment.yml)}
+
+resources:
+  - ${file(./serverless/resources/product-table.yml)}
+
+functions:

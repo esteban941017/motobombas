@@ -1,0 +1,29 @@
+Resources:
+  MeliQueue:
+    Type: AWS::SQS::Queue
+    DeletionPolicy: ${self:custom.deletionPolicy.${sls:stage}}
+    Properties:
+      QueueName: ${self:custom.meliQueueName}
+      DelaySeconds: 20
+      VisibilityTimeout: 600
+
+  MeliQueueName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ${self:custom.ssmPrefix}/MELI_QUEUE_NAME
+      Type: String
+      Value: ${self:custom.meliQueueName}
+
+  MeliQueueArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ${self:custom.ssmPrefix}/MELI_QUEUE_ARN
+      Type: String
+      Value: !GetAtt MeliQueue.Arn
+
+  MeliQueueUrl:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ${self:custom.ssmPrefix}/MELI_QUEUE_URL
+      Type: String
+      Value: !Ref MeliQueue

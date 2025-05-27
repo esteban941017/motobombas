@@ -1,0 +1,30 @@
+Resources:
+  ProductTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: ${self:custom.deletionPolicy.${sls:stage}}
+    Properties:
+      TableName: ${self:custom.productTableName}
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST
+      DeletionProtectionEnabled: ${self:custom.deletionProtectionPolicy.${sls:stage}}
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  ProductTableName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ${self:custom.ssmPrefix}/PRODUCT_TABLE_NAME
+      Type: String
+      Value: ${self:custom.productTableName}
+
+  ProductTableArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: ${self:custom.ssmPrefix}/PRODUCT_TABLE_ARN
+      Type: String
+      Value: !GetAtt ProductTable.Arn

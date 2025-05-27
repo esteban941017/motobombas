@@ -1,0 +1,17 @@
+ssmPrefix: /arobuxtamotobombas-infra-${sls:stage}
+
+serviceNamePrefix: ${self:service}-${sls:stage}
+
+deploymentBucket:
+  dev: arobuxtamotobombas-serverless-deployment-bucket-dev
+  prod: arobuxtamotobombas-serverless-deployment-bucket-prod
+
+productTableName: ${self:custom.serviceNamePrefix}-upload-table
+
+deletionPolicy:
+  dev: Delete
+  prod: Retain
+
+deletionProtectionPolicy:
+  dev: false
+  prod: true

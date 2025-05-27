@@ -1,0 +1,181 @@
+{
+  "service": {
+    "service": "arobuxtamotobombas-infra",
+    "serviceObject": {
+      "name": "arobuxtamotobombas-infra"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs18.x",
+      "stage": "dev",
+      "region": "us-east-1",
+      "deploymentBucket": "arobuxtamotobombas-serverless-deployment-bucket-dev",
+      "environment": {
+        "STAGE": "dev"
+      },
+      "versionFunctions": true,
+      "deploymentBucketObject": {
+        "name": "arobuxtamotobombas-serverless-deployment-bucket-dev"
+      },
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ProductTable": {
+            "Type": "AWS::DynamoDB::Table",
+            "DeletionPolicy": "Delete",
+            "Properties": {
+              "TableName": "arobuxtamotobombas-infra-dev-upload-table",
+              "AttributeDefinitions": [
+                {
+                  "AttributeName": "id",
+                  "AttributeType": "S"
+                }
+              ],
+              "KeySchema": [
+                {
+                  "AttributeName": "id",
+                  "KeyType": "HASH"
+                }
+              ],
+              "BillingMode": "PAY_PER_REQUEST",
+              "DeletionProtectionEnabled": false,
+              "PointInTimeRecoverySpecification": {
+                "PointInTimeRecoveryEnabled": true
+              }
+            }
+          },
+          "ProductTableName": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+              "Name": "/arobuxtamotobombas-infra-dev/PRODUCT_TABLE_NAME",
+              "Type": "String",
+              "Value": "arobuxtamotobombas-infra-dev-upload-table"
+            }
+          },
+          "ProductTableArn": {
+            "Type": "AWS::SSM::Parameter",
+            "Properties": {
+              "Name": "/arobuxtamotobombas-infra-dev/PRODUCT_TABLE_ARN",
+              "Type": "String",
+              "Value": {
+                "Fn::GetAtt": [
+                  "ProductTable",
+                  "Arn"
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "arobuxtamotobombas-serverless-deployment-bucket-dev",
+            "Export": {
+              "Name": "sls-arobuxtamotobombas-infra-dev-ServerlessDeploymentBucketName"
+            }
+          }
+        }
+      }
+    },
+    "custom": {
+      "ssmPrefix": "/arobuxtamotobombas-infra-dev",
+      "serviceNamePrefix": "arobuxtamotobombas-infra-dev",
+      "deploymentBucket": {
+        "dev": "arobuxtamotobombas-serverless-deployment-bucket-dev",
+        "prod": "arobuxtamotobombas-serverless-deployment-bucket-prod",
+        "versioning": false,
+        "accessLog": false,
+        "accelerate": false
+      },
+      "productTableName": "arobuxtamotobombas-infra-dev-upload-table",
+      "deletionPolicy": {
+        "dev": "Delete",
+        "prod": "Retain"
+      },
+      "deletionProtectionPolicy": {
+        "dev": false,
+        "prod": true
+      }
+    },
+    "plugins": [
+      "serverless-deployment-bucket"
+    ],
+    "pluginsData": {},
+    "functions": {},
+    "resources": {
+      "Resources": {
+        "ProductTable": {
+          "Type": "AWS::DynamoDB::Table",
+          "DeletionPolicy": "Delete",
+          "Properties": {
+            "TableName": "arobuxtamotobombas-infra-dev-upload-table",
+            "AttributeDefinitions": [
+              {
+                "AttributeName": "id",
+                "AttributeType": "S"
+              }
+            ],
+            "KeySchema": [
+              {
+                "AttributeName": "id",
+                "KeyType": "HASH"
+              }
+            ],
+            "BillingMode": "PAY_PER_REQUEST",
+            "DeletionProtectionEnabled": false,
+            "PointInTimeRecoverySpecification": {
+              "PointInTimeRecoveryEnabled": true
+            }
+          }
+        },
+        "ProductTableName": {
+          "Type": "AWS::SSM::Parameter",
+          "Properties": {
+            "Name": "/arobuxtamotobombas-infra-dev/PRODUCT_TABLE_NAME",
+            "Type": "String",
+            "Value": "arobuxtamotobombas-infra-dev-upload-table"
+          }
+        },
+        "ProductTableArn": {
+          "Type": "AWS::SSM::Parameter",
+          "Properties": {
+            "Name": "/arobuxtamotobombas-infra-dev/PRODUCT_TABLE_ARN",
+            "Type": "String",
+            "Value": {
+              "Fn::GetAtt": [
+                "ProductTable",
+                "Arn"
+              ]
+            }
+          }
+        }
+      },
+      "Outputs": {}
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless.yml",
+    "initialServerlessConfig": {
+      "service": "arobuxtamotobombas-infra",
+      "plugins": {
+        "$ref": "$[\"service\"][\"plugins\"]"
+      },
+      "frameworkVersion": "3",
+      "custom": {
+        "$ref": "$[\"service\"][\"custom\"]"
+      },
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "resources": {
+        "$ref": "$[\"service\"][\"resources\"]"
+      },
+      "functions": null
+    },
+    "layers": {},
+    "isDashboardMonitoringPreconfigured": false
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/arobuxtamotobombas-infra/dev/1748305104718-2025-05-27T00:18:24.718Z",
+    "artifact": ""
+  }
+}

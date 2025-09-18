@@ -1,0 +1,27 @@
+{
+  "name": "motobombas-frontend",
+  "version": "1.0.0",
+  "description": "Frontend application for Motobombas - Soluções Especializadas para Movimentação de Fluidos",
+  "main": "index.html",
+  "scripts": {
+    "build": "tsc script.ts --target es2020 --module es2020 --outDir . --moduleResolution node",
+    "dev": "tsc script.ts --target es2020 --module es2020 --outDir . --moduleResolution node --watch",
+    "serve": "npx http-server . -p 3000 -o",
+    "start": "npm run build && npm run serve"
+  },
+  "keywords": [
+    "motobombas",
+    "bombas",
+    "locacao",
+    "industria",
+    "fluidos"
+  ],
+  "author": "Motobombas",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+}
